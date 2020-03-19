@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomSayCommentMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomSayComment">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="owner" jdbcType="VARCHAR" property="owner"/>
+        <result column="toname" jdbcType="VARCHAR" property="toname"/>
+        <result column="send_time" jdbcType="TIMESTAMP" property="sendTime"/>
+        <result column="comment_content" jdbcType="VARCHAR" property="commentContent"/>
+        <result column="say_id" jdbcType="BIGINT" property="sayId"/>
+        <result column="pid" jdbcType="BIGINT" property="pid"/>
+    </resultMap>
+
+</mapper>

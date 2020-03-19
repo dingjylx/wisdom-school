@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomCourseMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomCourse">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="course_title" jdbcType="VARCHAR" property="courseTitle"/>
+        <result column="course_teacher" jdbcType="VARCHAR" property="courseTeacher"/>
+        <result column="course_time" jdbcType="VARCHAR" property="courseTime"/>
+        <result column="course_classroom" jdbcType="VARCHAR" property="courseClassroom"/>
+        <result column="selected_number" jdbcType="INTEGER" property="selectedNumber"/>
+        <result column="max_number" jdbcType="INTEGER" property="maxNumber"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+</mapper>

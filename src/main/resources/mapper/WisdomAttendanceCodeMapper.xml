@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomAttendanceCodeMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomAttendanceCode">
+        <id column="code_id" jdbcType="BIGINT" property="codeId"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="attendance_time" jdbcType="VARCHAR" property="attendanceTime"/>
+        <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+</mapper>

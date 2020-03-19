@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomCommentMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomComment">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+        <result column="commentator" jdbcType="BIGINT" property="commentator"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+
+    <resultMap id="CommentVO" type="com.wisdom.classroom.vo.CommentVO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="question_id" jdbcType="BIGINT" property="questionId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="commentator"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+
+    <select id="selectCommentList" resultMap="CommentVO" parameterType="java.lang.String">
+        select c.*,u.user_name from wisdom_comment c
+        left join wisdom_user u on c.commentator=u.id
+        where 1=1
+        <if test="_parameter !=null and _parameter != '' ">
+            and c.question_id=#{questionId}
+        </if>
+    </select>
+
+</mapper>

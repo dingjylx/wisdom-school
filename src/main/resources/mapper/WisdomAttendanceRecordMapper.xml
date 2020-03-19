@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomAttendanceRecordMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomAttendanceRecord">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code_id" jdbcType="BIGINT" property="codeId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="attendance_time" jdbcType="TIMESTAMP" property="attendanceTime"/>
+    </resultMap>
+
+    <resultMap id="AttendanceRecordVO" type="com.wisdom.classroom.vo.AttendanceRecordVO">
+        <result column="code_id" jdbcType="BIGINT" property="codeId"/>
+        <result column="code" jdbcType="BIGINT" property="code"/>
+        <result column="attendance_time" jdbcType="VARCHAR" property="attendanceTime"/>
+        <result column="s_attendance_time" jdbcType="VARCHAR" property="sAttendanceTime"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="expire_time" jdbcType="VARCHAR" property="expireTime"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_name" jdbcType="BIGINT" property="studentName"/>
+        <result column="status" jdbcType="BIGINT" property="status"/>
+    </resultMap>
+
+
+    <insert id="batchInitRecord" parameterType="java.lang.Long">
+  insert into wisdom_attendance_record (code_id,user_id,status)
+  select #{codeId},id,'N' from wisdom_user where user_type='S'
+  </insert>
+
+    <select id="selectAttendanceRecord" resultMap="AttendanceRecordVO" parameterType="java.lang.Long">
+    select
+    c.code_id,
+    c.`code`,
+    r.user_id,
+    u.user_name,
+    r.attendance_time s_attendance_time,
+    r.`status` from
+    wisdom_attendance_record r
+    left join wisdom_attendance_code c on r.code_id=c.code_id
+    left join wisdom_user u on r.user_id=u.id
+    where c.code_id=#{codeId}
+  </select>
+
+    <select id="selectAttendanceRecordByUserId" resultMap="AttendanceRecordVO">
+        select
+        c.*,
+        r.user_id,
+        r.`status`,
+        r.attendance_time s_attendance_time
+        from wisdom_attendance_code c
+        left join wisdom_attendance_record r on c.code_id=r.code_id
+        where r.user_id=#{userId}
+        <if test="attendanceTime !=null and attendanceTime != '' ">
+            and c.attendance_time=#{attendanceTime}
+        </if>
+    </select>
+</mapper>

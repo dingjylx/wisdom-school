@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.classroom.mapper.WisdomHomeworkMapper">
+    <resultMap id="BaseResultMap" type="com.wisdom.classroom.entity.WisdomHomework">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="HomeworkVO" type="com.wisdom.classroom.vo.HomeworkVO">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="homeworkName"/>
+        <result column="file_id" jdbcType="BIGINT" property="fileId"/>
+        <result column="file_name" jdbcType="VARCHAR" property="fileName"/>
+        <result column="user_name" jdbcType="VARCHAR" property="teacherName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <resultMap id="HomeworkAnswerVO" type="com.wisdom.classroom.vo.HomeworkAnswerVO">
+        <result column="answerId" jdbcType="BIGINT" property="answerId"/>
+        <result column="homeworkId" jdbcType="BIGINT" property="homeworkId"/>
+        <result column="answerFileName" jdbcType="VARCHAR" property="answerFileName"/>
+        <result column="studentName" jdbcType="BIGINT" property="studentName"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+    </resultMap>
+
+
+    <!--根据作业名称查询所有作业-->
+    <select id="selectHomeworkList" resultMap="HomeworkVO" parameterType="java.lang.Long">
+        select
+        h.id,
+        h.`name`,
+        h.file_id,
+        f.file_name,
+        f.file_url,
+        u.user_name,
+        h.create_time
+        from wisdom_homework h
+        left join wisdom_file f on h.file_id=f.file_id
+        left join wisdom_user u on h.user_id=u.id
+        where 1=1
+        <if test="_parameter !=null and _parameter != '' ">
+            and h.name like concat('%',#{homeworkName},'%')
+        </if>
+    </select>
+
+    <!--根据作业查询所有答案-->
+    <select id="selectHomeworkAnswerList" resultMap="HomeworkAnswerVO" parameterType="java.lang.Long">
+        select
+        a.id answerId,
+        a.homework_id homeworkId,
+        f.file_name answerFileName,
+        u.user_name studentName,
+        h.create_time
+        from wisdom_homework_answer a
+        left join wisdom_homework h on h.id=a.homework_id
+        left join wisdom_file f on a.file_id=f.file_id
+        left join wisdom_user u on a.user_id=u.id
+        where 1=1
+        <if test="_parameter !=null and _parameter != '' ">
+            and a.homework_id=#{homeworkId}
+        </if>
+    </select>
+
+</mapper>
